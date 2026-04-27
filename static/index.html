@@ -296,9 +296,9 @@ import { fetchFile, toBlobURL } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/util@
 
 const ffmpeg = new FFmpeg();
 
-// FFmpeg読み込み
+// FFmpeg読み込み（シングルスレッド版 = COEP不要・互換性が高い）
 async function loadFFmpeg() {
-  const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
+  const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.12.6/dist/esm';
   await ffmpeg.load({
     coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
     wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
@@ -307,6 +307,7 @@ async function loadFFmpeg() {
 }
 
 loadFFmpeg().catch(e => {
+  console.error(e);
   document.getElementById('ffmpeg-loading').innerHTML =
     '<p style="color:#FF0000">FFmpegの読み込みに失敗しました。ページを再読み込みしてください。</p>';
 });
