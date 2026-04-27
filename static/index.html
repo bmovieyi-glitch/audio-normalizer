@@ -166,6 +166,12 @@
 </head>
 <body>
 
+<!-- FFmpeg読み込み中オーバーレイ -->
+<div id="ffmpeg-loading" style="position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;gap:16px;">
+  <div style="width:40px;height:40px;border:3px solid #eee;border-top-color:#FF0000;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+  <p style="font-size:15px;font-weight:600;color:#333;" id="load-msg">FFmpegを読み込み中...</p>
+  <small style="font-size:12px;color:#888;">初回のみ20〜30秒かかります</small>
+</div>
 
 <div class="container">
   <div class="header">
@@ -284,7 +290,31 @@
     </p>
   </footer>
 
-<script>
+<script type="module">
+import { FFmpeg } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
+import { fetchFile, toBlobURL } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js';
+
+// ffmpeg.wasm（@ffmpeg/core = シングルスレッド版・COEP不要）
+const ffmpeg = new FFmpeg();
+const loadingEl = document.getElementById('ffmpeg-loading');
+const loadMsg = document.getElementById('load-msg');
+
+(async () => {
+  try {
+    loadMsg.textContent = 'FFmpegを読み込み中... (初回20〜30秒)';
+    const base = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
+    await ffmpeg.load({
+      coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, 'text/javascript'),
+      wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, 'application/wasm'),
+    });
+    loadingEl.style.display = 'none';
+  } catch (e) {
+    loadMsg.textContent = '読み込み失敗。ページを再読み込みしてください。';
+    loadMsg.style.color = '#FF0000';
+    console.error('FFmpeg load error:', e);
+  }
+})();
+
 // UI要素
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
@@ -296,10 +326,10 @@ const slider = document.getElementById('target-slider');
 const progressWrap = document.getElementById('progress-wrap');
 const progressBar = document.getElementById('progress-bar');
 const progressLabel = document.getElementById('progress-label');
-const overlay = document.getElementById('processing-overlay');
 
 let currentFile = null;
 let loudData = null;
+const overlay = null; // 未使用（ffmpeg.wasm版）
 
 function getTargetCL() { return parseFloat(slider.value); }
 function clToLufs(cl) { return (cl - 14.0).toFixed(1); }
@@ -354,7 +384,7 @@ dropZone.addEventListener('drop', e => {
 });
 fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
 
-// ---- Step1: /api/analyze に送信 ----
+// ---- Step1: ブラウザでFFmpeg解析 ----
 async function handleFile(file) {
   if (!file.name.toLowerCase().endsWith('.mp4') && file.type !== 'video/mp4') {
     alert('MP4ファイルのみ対応しています');
@@ -366,27 +396,24 @@ async function handleFile(file) {
   resultSection.style.display = 'block';
   document.getElementById('filename-display').textContent = file.name;
   document.getElementById('file-size-display').textContent = fmtSize(file.size);
-  showStatus('<span class="spinner"></span>音声を解析中...', '');
+  showStatus('<span class="spinner"></span>音声を解析中... (大きいファイルは数分かかります)', '');
   normalizeBtn.disabled = true;
 
-  overlay.querySelector('p').textContent = '解析中...';
-  overlay.querySelector('small').textContent = 'ファイルサイズによって数十秒かかる場合があります';
-  overlay.classList.add('active');
-
   try {
-    const formData = new FormData();
-    formData.append('file', file);
+    await ffmpeg.writeFile('input.mp4', await fetchFile(file));
+    const logs = [];
+    const onLog = ({ message }) => logs.push(message);
+    ffmpeg.on('log', onLog);
+    await ffmpeg.exec(['-i','input.mp4','-af','loudnorm=I=-18:TP=-1:LRA=11:print_format=json','-f','null','-']);
+    ffmpeg.off('log', onLog);
 
-    const res = await fetch('/api/analyze', { method: 'POST', body: formData });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: res.statusText }));
-      throw new Error(err.error || res.statusText);
-    }
-    loudData = await res.json();
+    const joined = logs.join('\n');
+    const s = joined.lastIndexOf('{'), e = joined.lastIndexOf('}') + 1;
+    if (s === -1) throw new Error('解析結果が取得できませんでした');
+    loudData = JSON.parse(joined.slice(s, e));
 
     const inputI = parseFloat(loudData.input_i);
     const cl = inputI - (-14.0);
-
     document.getElementById('current-cl').textContent = fmtCL(cl);
     document.getElementById('current-lufs').textContent = inputI.toFixed(1) + ' LUFS';
     document.getElementById('val-current').textContent = inputI.toFixed(1) + ' LUFS';
@@ -394,18 +421,15 @@ async function handleFile(file) {
       document.getElementById('bar-current').style.width = toPercent(inputI) + '%';
       document.getElementById('bar-after').style.width = toPercent(parseFloat(clToLufs(getTargetCL()))) + '%';
     }, 100);
-
     showStatus('', '');
     normalizeBtn.disabled = false;
   } catch (e) {
-    showStatus('解析に失敗しました。有効なMP4ファイルか確認してください。', 'error');
+    showStatus('解析に失敗しました: ' + e.message, 'error');
     console.error(e);
-  } finally {
-    overlay.classList.remove('active');
   }
 }
 
-// ---- Step2: /api/normalize に送信 ----
+// ---- Step2: ブラウザでFFmpeg正規化 ----
 normalizeBtn.addEventListener('click', async () => {
   if (!currentFile || !loudData) return;
   const targetLufs = parseFloat(clToLufs(getTargetCL()));
@@ -413,60 +437,45 @@ normalizeBtn.addEventListener('click', async () => {
   normalizeBtn.disabled = true;
   resetBtn.disabled = true;
   progressWrap.style.display = 'block';
-  progressBar.style.width = '10%';
-  progressLabel.textContent = '正規化処理中...';
+  progressBar.style.width = '0%';
   showStatus('', '');
 
-  overlay.querySelector('p').textContent = '正規化処理中...';
-  overlay.querySelector('small').textContent = 'サーバーで処理しています。しばらくお待ちください';
-  overlay.classList.add('active');
-
-  // フェイクプログレス（サーバー処理中の視覚的フィードバック）
-  let fakeProgress = 10;
-  const fakeTimer = setInterval(() => {
-    fakeProgress = Math.min(fakeProgress + 2, 85);
-    progressBar.style.width = fakeProgress + '%';
-    progressLabel.textContent = `処理中... ${fakeProgress}%`;
-  }, 800);
+  ffmpeg.on('progress', ({ progress }) => {
+    const pct = Math.round(Math.min(progress, 1) * 100);
+    progressBar.style.width = pct + '%';
+    progressLabel.textContent = `処理中... ${pct}%`;
+  });
 
   try {
-    const formData = new FormData();
-    formData.append('file', currentFile);
-    formData.append('target_lufs', targetLufs);
-    formData.append('input_i', loudData.input_i);
-    formData.append('input_lra', loudData.input_lra);
-    formData.append('input_tp', loudData.input_tp);
-    formData.append('input_thresh', loudData.input_thresh);
-    formData.append('target_offset', loudData.target_offset);
+    const filter = [
+      `loudnorm=I=${targetLufs}:TP=-1:LRA=11`,
+      `measured_I=${loudData.input_i}`,
+      `measured_LRA=${loudData.input_lra}`,
+      `measured_TP=${loudData.input_tp}`,
+      `measured_thresh=${loudData.input_thresh}`,
+      `offset=${loudData.target_offset}`,
+      'linear=true'
+    ].join(':');
 
-    const res = await fetch('/api/normalize', { method: 'POST', body: formData });
-    clearInterval(fakeTimer);
+    await ffmpeg.exec(['-i','input.mp4','-af',filter,'-c:v','copy','-y','output.mp4']);
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: res.statusText }));
-      throw new Error(err.error || res.statusText);
-    }
-
-    const blob = await res.blob();
+    const data = await ffmpeg.readFile('output.mp4');
+    const blob = new Blob([data.buffer], { type: 'video/mp4' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     const cl = getTargetCL();
     a.href = url;
     a.download = `normalized_CL${fmtCL(cl).replace('+','plus').replace('-','minus')}.mp4`;
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    URL.revokeObjectURL(url);
 
     progressBar.style.width = '100%';
     progressLabel.textContent = '完了！';
     showStatus(`ダウンロード完了。content loudness: ${fmtCL(cl)} に正規化しました。`, 'success');
   } catch (e) {
-    clearInterval(fakeTimer);
     showStatus('処理に失敗しました: ' + e.message, 'error');
     console.error(e);
   } finally {
-    overlay.classList.remove('active');
     normalizeBtn.disabled = false;
     resetBtn.disabled = false;
   }
