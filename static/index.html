@@ -130,6 +130,17 @@
     .badge-local { background: #e8f5e9; color: #2e7d32; }
     .badge-nosize { background: #e3f2fd; color: #1565c0; }
     .chips-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer {
+      margin-top: 40px; text-align: center;
+      border-top: 1px solid #e8e8e8; padding-top: 24px;
+    }
+    .footer-disclaimer {
+      font-size: 12px; color: #999; line-height: 1.8; max-width: 480px; margin: 0 auto 12px;
+    }
+    .footer-license {
+      font-size: 11px; color: #bbb;
+    }
+    .footer-license a { color: #bbb; text-decoration: underline; }
     /* loading overlay */
     #ffmpeg-loading {
       position: fixed; inset: 0; background: rgba(255,255,255,0.92);
@@ -257,6 +268,19 @@
     </div>
   </div>
 </div>
+
+  <footer>
+    <p class="footer-disclaimer">
+      本ツールはアップロードされたファイルを外部サーバーに送信しません。すべての処理はお使いのブラウザ上で行われます。<br>
+      本ツールの使用によって生じたいかなる損害についても、開発者は一切の責任を負いません。<br>
+      処理結果はご自身の責任においてご利用ください。
+    </p>
+    <p class="footer-license">
+      This software uses <a href="https://ffmpeg.org" target="_blank" rel="noopener">FFmpeg</a> /
+      <a href="https://github.com/ffmpegwasm/ffmpeg.wasm" target="_blank" rel="noopener">ffmpeg.wasm</a>
+      licensed under <a href="https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html" target="_blank" rel="noopener">LGPLv2.1</a>
+    </p>
+  </footer>
 
 <script type="module">
 import { FFmpeg } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
