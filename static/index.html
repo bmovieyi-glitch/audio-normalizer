@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: #f5f5f5;
@@ -16,190 +15,67 @@
       min-height: 100vh;
       padding: 32px 16px 64px;
     }
-
-    /* Header */
-    .header {
-      text-align: center;
-      margin-bottom: 36px;
-    }
+    .header { text-align: center; margin-bottom: 36px; }
     .logo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #FF0000;
-      color: #fff;
-      padding: 6px 16px 6px 10px;
-      border-radius: 9999px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #FF0000; color: #fff;
+      padding: 6px 16px 6px 10px; border-radius: 9999px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 16px;
     }
-    .logo-badge svg { flex-shrink: 0; }
-    h1 {
-      font-size: 32px;
-      font-weight: 800;
-      color: #0f0f0f;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
+    h1 { font-size: 32px; font-weight: 800; color: #0f0f0f; line-height: 1.2; margin-bottom: 8px; }
     h1 span { color: #FF0000; }
-    .subtitle {
-      font-size: 15px;
-      color: #606060;
-      font-weight: 400;
-    }
-
-    /* Layout */
-    .container {
-      max-width: 540px;
-      margin: 0 auto;
-    }
-
-    /* Slider Card */
+    .subtitle { font-size: 15px; color: #606060; }
+    .container { max-width: 540px; margin: 0 auto; }
     .card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 12px;
+      background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
     }
-    .card-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #555;
-      margin-bottom: 16px;
-    }
-
-    .slider-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 16px;
-    }
+    .card-label { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #555; margin-bottom: 16px; }
+    .slider-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
     .slider-desc { font-size: 14px; color: #333; font-weight: 500; }
-    .slider-big {
-      text-align: right;
-    }
-    .slider-big .val {
-      font-size: 36px;
-      font-weight: 800;
-      color: #FF0000;
-      line-height: 1;
-    }
-    .slider-big .lufs {
-      font-size: 13px;
-      color: #555;
-      font-weight: 600;
-      margin-top: 2px;
-    }
-
+    .slider-big { text-align: right; }
+    .slider-big .val { font-size: 36px; font-weight: 800; color: #FF0000; line-height: 1; }
+    .slider-big .lufs { font-size: 13px; color: #555; font-weight: 600; margin-top: 2px; }
     input[type=range] {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 8px;
-      border-radius: 9999px;
-      background: #e0e0e0;
-      outline: none;
-      cursor: pointer;
+      -webkit-appearance: none; width: 100%; height: 8px; border-radius: 9999px;
+      background: #e0e0e0; outline: none; cursor: pointer;
     }
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #FF0000;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(255,0,0,0.35);
-      transition: transform 0.1s;
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: #FF0000; cursor: pointer; box-shadow: 0 2px 8px rgba(255,0,0,0.35); transition: transform 0.1s;
     }
     input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); }
-
-    .slider-ticks {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
-    }
+    .slider-ticks { display: flex; justify-content: space-between; margin-top: 8px; }
     .slider-ticks span { font-size: 12px; color: #888; font-weight: 600; }
-
-    /* Drop zone */
     .drop-zone {
-      border: 2.5px dashed #bbb;
-      border-radius: 20px;
-      padding: 48px 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-      background: #fff;
-      margin-bottom: 12px;
+      border: 2.5px dashed #bbb; border-radius: 20px; padding: 48px 24px; text-align: center;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      background: #fff; margin-bottom: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
     }
     .drop-zone:hover, .drop-zone.drag-over {
-      border-color: #FF0000;
-      border-style: solid;
-      background: #fff5f5;
+      border-color: #FF0000; border-style: solid; background: #fff5f5;
       box-shadow: 0 0 0 4px rgba(255,0,0,0.08);
     }
     .drop-icon {
-      width: 64px;
-      height: 64px;
-      background: #ffe5e5;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
+      width: 64px; height: 64px; background: #ffe5e5; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
     }
     .drop-zone p { font-size: 16px; color: #222; font-weight: 500; margin-bottom: 4px; }
     .drop-zone .highlight { color: #FF0000; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
     .drop-zone .note { font-size: 13px; color: #777; margin-top: 8px; font-weight: 500; }
     #file-input { display: none; }
-
-    /* Result card */
     .result-section { display: none; }
-
-    .filename-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+    .filename-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
     .file-icon {
-      width: 40px;
-      height: 40px;
-      background: #fff5f5;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      width: 40px; height: 40px; background: #fff5f5; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .file-meta { overflow: hidden; }
-    .file-name {
-      font-size: 14px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .file-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .file-sub { font-size: 12px; color: #666; font-weight: 500; }
-
-    /* Loudness display */
-    .loudness-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .loud-box {
-      background: #f5f5f5;
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-    }
+    .loudness-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .loud-box { background: #f5f5f5; border-radius: 14px; padding: 16px; text-align: center; }
     .loud-box.after { background: #fff5f5; }
     .loud-box-label { font-size: 11px; color: #555; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 6px; }
     .loud-box-val { font-size: 24px; font-weight: 800; line-height: 1; }
@@ -207,50 +83,13 @@
     .loud-box-val.after-val { color: #FF0000; }
     .loud-box-sub { font-size: 12px; color: #555; font-weight: 600; margin-top: 4px; }
     .arrow-box { text-align: center; color: #ddd; font-size: 20px; }
-
-    /* Reference scale */
-    .ref-scale-wrap {
-      padding-left: 58px;
-      padding-right: 74px;
-      margin-bottom: 6px;
-    }
-    .ref-scale {
-      position: relative;
-      height: 32px;
-    }
-    .ref-marker {
-      position: absolute;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-    }
-    .ref-marker-line {
-      width: 1.5px;
-      height: 8px;
-      border-radius: 1px;
-    }
-    .ref-marker-label {
-      font-size: 10px;
-      font-weight: 700;
-      white-space: nowrap;
-      line-height: 1;
-    }
-    .ref-marker-lufs {
-      font-size: 9px;
-      font-weight: 500;
-      white-space: nowrap;
-      line-height: 1;
-    }
-
-    /* Bar meters */
-    .meter-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
+    .ref-scale-wrap { padding-left: 58px; padding-right: 74px; margin-bottom: 6px; }
+    .ref-scale { position: relative; height: 32px; }
+    .ref-marker { position: absolute; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .ref-marker-line { width: 1.5px; height: 8px; border-radius: 1px; }
+    .ref-marker-label { font-size: 10px; font-weight: 700; white-space: nowrap; line-height: 1; }
+    .ref-marker-lufs { font-size: 9px; font-weight: 500; white-space: nowrap; line-height: 1; }
+    .meter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .meter-label { font-size: 12px; color: #444; font-weight: 700; width: 48px; text-align: right; flex-shrink: 0; }
     .meter-wrap { position: relative; flex: 1; height: 10px; background: #e0e0e0; border-radius: 9999px; overflow: visible; }
     .meter-track { width: 100%; height: 100%; border-radius: 9999px; overflow: hidden; }
@@ -260,81 +99,61 @@
     .meter-num { font-size: 12px; font-weight: 700; width: 64px; text-align: right; flex-shrink: 0; }
     .meter-num.current-num { color: #0f0f0f; }
     .meter-num.after-num { color: #FF0000; }
-
-    /* Buttons */
     .btn {
-      display: block;
-      width: 100%;
-      padding: 16px;
-      border-radius: 9999px;
-      border: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s;
-      margin-top: 12px;
+      display: block; width: 100%; padding: 16px; border-radius: 9999px; border: none;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
+      cursor: pointer; transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s; margin-top: 12px;
     }
     .btn:active { transform: scale(0.98); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
-    .btn-primary {
-      background: #FF0000;
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(255,0,0,0.3);
-    }
-    .btn-primary:hover:not(:disabled) {
-      box-shadow: 0 6px 20px rgba(255,0,0,0.4);
-      transform: translateY(-1px);
-    }
-    .btn-ghost {
-      background: #f5f5f5;
-      color: #606060;
-    }
+    .btn-primary { background: #FF0000; color: #fff; box-shadow: 0 4px 16px rgba(255,0,0,0.3); }
+    .btn-primary:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(255,0,0,0.4); transform: translateY(-1px); }
+    .btn-ghost { background: #f5f5f5; color: #606060; }
     .btn-ghost:hover:not(:disabled) { background: #ebebeb; }
-
-    /* Status */
-    .status {
-      font-size: 13px;
-      color: #aaa;
-      text-align: center;
-      margin-top: 12px;
-      min-height: 20px;
-    }
+    .status { font-size: 13px; color: #aaa; text-align: center; margin-top: 12px; min-height: 20px; }
     .status.error { color: #FF0000; }
     .status.success { color: #00a854; }
-
+    .progress-wrap { margin-top: 16px; display: none; }
+    .progress-bar-bg { width: 100%; height: 8px; background: #e0e0e0; border-radius: 9999px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: #FF0000; border-radius: 9999px; width: 0%; transition: width 0.3s; }
+    .progress-label { font-size: 12px; color: #555; font-weight: 600; text-align: center; margin-top: 6px; }
     .spinner {
-      display: inline-block;
-      width: 13px;
-      height: 13px;
-      border: 2px solid #ddd;
-      border-top-color: #FF0000;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      vertical-align: middle;
-      margin-right: 6px;
+      display: inline-block; width: 13px; height: 13px; border: 2px solid #ddd;
+      border-top-color: #FF0000; border-radius: 50%; animation: spin 0.7s linear infinite;
+      vertical-align: middle; margin-right: 6px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Info chip */
     .info-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: #f0f0f0;
-      border-radius: 9999px;
-      padding: 4px 12px;
-      font-size: 12px;
-      color: #606060;
-      font-weight: 600;
-      margin-top: 16px;
+      display: inline-flex; align-items: center; gap: 5px; border-radius: 9999px;
+      padding: 4px 12px; font-size: 12px; font-weight: 600; margin-top: 16px;
+    }
+    .badge-local { background: #e8f5e9; color: #2e7d32; }
+    .badge-nosize { background: #e3f2fd; color: #1565c0; }
+    .chips-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    /* loading overlay */
+    #ffmpeg-loading {
+      position: fixed; inset: 0; background: rgba(255,255,255,0.92);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 100; gap: 16px;
+    }
+    #ffmpeg-loading p { font-size: 15px; font-weight: 600; color: #333; }
+    #ffmpeg-loading small { font-size: 12px; color: #888; }
+    .load-spinner {
+      width: 40px; height: 40px; border: 3px solid #eee; border-top-color: #FF0000;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
     }
   </style>
 </head>
 <body>
-<div class="container">
 
+<!-- FFmpeg読み込み中オーバーレイ -->
+<div id="ffmpeg-loading">
+  <div class="load-spinner"></div>
+  <p>FFmpegを読み込み中...</p>
+  <small>初回のみ数秒かかります</small>
+</div>
+
+<div class="container">
   <div class="header">
     <div class="logo-badge">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
@@ -344,7 +163,7 @@
     <p class="subtitle">MP4をアップロードするだけ。content loudnessを自動で調整します。</p>
   </div>
 
-  <!-- Target slider -->
+  <!-- スライダー -->
   <div class="card">
     <div class="card-label">目標 Content Loudness</div>
     <div class="slider-header">
@@ -360,7 +179,7 @@
     </div>
   </div>
 
-  <!-- Drop zone -->
+  <!-- ドロップゾーン -->
   <div class="drop-zone" id="drop-zone">
     <div class="drop-icon">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round">
@@ -370,15 +189,14 @@
       </svg>
     </div>
     <p><span class="highlight">クリックして選択</span>またはドロップ</p>
-    <p style="font-size:14px;color:#aaa;margin-top:4px;">MP4ファイルに対応</p>
-    <input type="file" id="file-input" accept=".mp4">
+    <p style="font-size:14px;color:#aaa;margin-top:4px;">MP4ファイルに対応・ファイルサイズ制限なし</p>
+    <input type="file" id="file-input" accept=".mp4,video/mp4">
   </div>
 
-  <!-- Result -->
+  <!-- 結果 -->
   <div class="result-section" id="result-section">
     <div class="card">
       <div class="card-label">解析結果</div>
-
       <div class="filename-row">
         <div class="file-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round">
@@ -387,10 +205,9 @@
         </div>
         <div class="file-meta">
           <div class="file-name" id="filename-display">—</div>
-          <div class="file-sub">解析完了</div>
+          <div class="file-sub" id="file-size-display">—</div>
         </div>
       </div>
-
       <div class="loudness-grid">
         <div class="loud-box">
           <div class="loud-box-label">現在</div>
@@ -404,188 +221,258 @@
           <div class="loud-box-sub" id="after-lufs">-18.0 LUFS</div>
         </div>
       </div>
-
-      <!-- Reference scale -->
       <div class="ref-scale-wrap">
         <div class="ref-scale" id="ref-scale"></div>
       </div>
-
       <div class="meter-row">
         <div class="meter-label">現在</div>
-        <div class="meter-wrap">
-          <div class="meter-track"><div class="meter-fill current-fill" id="bar-current" style="width:0%"></div></div>
-        </div>
+        <div class="meter-wrap"><div class="meter-track"><div class="meter-fill current-fill" id="bar-current" style="width:0%"></div></div></div>
         <div class="meter-num current-num" id="val-current">—</div>
       </div>
       <div class="meter-row">
         <div class="meter-label">正規化後</div>
-        <div class="meter-wrap">
-          <div class="meter-track"><div class="meter-fill after-fill" id="bar-after" style="width:0%"></div></div>
-        </div>
+        <div class="meter-wrap"><div class="meter-track"><div class="meter-fill after-fill" id="bar-after" style="width:0%"></div></div></div>
         <div class="meter-num after-num" id="val-after">-18.0 LUFS</div>
+      </div>
+
+      <!-- プログレスバー -->
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
+        <div class="progress-label" id="progress-label">処理中...</div>
       </div>
 
       <button class="btn btn-primary" id="normalize-btn">正規化してダウンロード</button>
       <button class="btn btn-ghost" id="reset-btn">別のファイルを選択</button>
       <div class="status" id="status"></div>
     </div>
-
-    <div style="text-align:center;">
-      <div class="info-chip" style="background:#e8f5e9;color:#2e7d32;">
+    <div class="chips-row">
+      <div class="info-chip badge-local">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        映像は無劣化コピー（音声のみ処理）
+        ファイルは端末内で処理（外部送信なし）
+      </div>
+      <div class="info-chip badge-nosize">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        ファイルサイズ制限なし
       </div>
     </div>
   </div>
-
 </div>
 
-<script>
-  const dropZone = document.getElementById('drop-zone');
-  const fileInput = document.getElementById('file-input');
-  const resultSection = document.getElementById('result-section');
-  const normalizeBtn = document.getElementById('normalize-btn');
-  const resetBtn = document.getElementById('reset-btn');
-  const statusEl = document.getElementById('status');
-  const slider = document.getElementById('target-slider');
+<script type="module">
+import { FFmpeg } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
+import { fetchFile, toBlobURL } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js';
 
-  let currentFileId = null;
+const ffmpeg = new FFmpeg();
 
-  function getTargetCL() { return parseFloat(slider.value); }
-  function clToLufs(cl) { return (cl - 14.0).toFixed(1); }
-  function fmtCL(cl) { return (cl >= 0 ? '+' : '') + cl.toFixed(1) + ' dB'; }
-
-  function updateSliderDisplay() {
-    const cl = getTargetCL();
-    const lufs = clToLufs(cl);
-    document.getElementById('slider-display').textContent = fmtCL(cl);
-    document.getElementById('slider-lufs').textContent = lufs + ' LUFS';
-    document.getElementById('after-cl').textContent = fmtCL(cl);
-    document.getElementById('after-lufs').textContent = lufs + ' LUFS';
-    document.getElementById('val-after').textContent = lufs + ' LUFS';
-    document.getElementById('bar-after').style.width = toPercent(parseFloat(lufs)) + '%';
-  }
-
-  slider.addEventListener('input', updateSliderDisplay);
-  updateSliderDisplay();
-
-  function toPercent(lufs) {
-    return Math.max(0, Math.min(100, ((lufs + 30) / 20) * 100));
-  }
-
-  // Reference markers: [lufs, label, color]
-  const REF_MARKERS = [
-    { lufs: -23, label: '放送規格', sub: '-23 LUFS', color: '#888' },
-    { lufs: -16, label: 'Podcast', sub: '-16 LUFS', color: '#f5a623' },
-    { lufs: -14, label: 'YouTube', sub: '-14 LUFS', color: '#FF0000' },
-    { lufs: -11, label: '配信向け', sub: '-11 LUFS', color: '#7c4dff' },
-  ];
-
-  function buildRefScale() {
-    const el = document.getElementById('ref-scale');
-    el.innerHTML = '';
-    REF_MARKERS.forEach(({ lufs, label, sub, color }) => {
-      const pct = toPercent(lufs);
-      const m = document.createElement('div');
-      m.className = 'ref-marker';
-      m.style.left = pct + '%';
-      m.innerHTML = `
-        <div class="ref-marker-label" style="color:${color}">${label}</div>
-        <div class="ref-marker-lufs" style="color:${color}">${sub}</div>
-        <div class="ref-marker-line" style="background:${color}"></div>
-      `;
-      el.appendChild(m);
-    });
-  }
-  buildRefScale();
-
-  dropZone.addEventListener('click', () => fileInput.click());
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.classList.remove('drag-over');
-    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+// FFmpeg読み込み
+async function loadFFmpeg() {
+  const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
+  await ffmpeg.load({
+    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
   });
-  fileInput.addEventListener('change', () => {
-    if (fileInput.files[0]) handleFile(fileInput.files[0]);
+  document.getElementById('ffmpeg-loading').style.display = 'none';
+}
+
+loadFFmpeg().catch(e => {
+  document.getElementById('ffmpeg-loading').innerHTML =
+    '<p style="color:#FF0000">FFmpegの読み込みに失敗しました。ページを再読み込みしてください。</p>';
+});
+
+// UI要素
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const resultSection = document.getElementById('result-section');
+const normalizeBtn = document.getElementById('normalize-btn');
+const resetBtn = document.getElementById('reset-btn');
+const statusEl = document.getElementById('status');
+const slider = document.getElementById('target-slider');
+const progressWrap = document.getElementById('progress-wrap');
+const progressBar = document.getElementById('progress-bar');
+const progressLabel = document.getElementById('progress-label');
+
+let currentFile = null;
+
+function getTargetCL() { return parseFloat(slider.value); }
+function clToLufs(cl) { return (cl - 14.0).toFixed(1); }
+function fmtCL(cl) { return (cl >= 0 ? '+' : '') + cl.toFixed(1) + ' dB'; }
+function toPercent(lufs) { return Math.max(0, Math.min(100, ((lufs + 30) / 20) * 100)); }
+function fmtSize(bytes) {
+  if (bytes >= 1024**3) return (bytes / 1024**3).toFixed(1) + ' GB';
+  if (bytes >= 1024**2) return (bytes / 1024**2).toFixed(0) + ' MB';
+  return (bytes / 1024).toFixed(0) + ' KB';
+}
+
+function updateSliderDisplay() {
+  const cl = getTargetCL();
+  const lufs = clToLufs(cl);
+  document.getElementById('slider-display').textContent = fmtCL(cl);
+  document.getElementById('slider-lufs').textContent = lufs + ' LUFS';
+  document.getElementById('after-cl').textContent = fmtCL(cl);
+  document.getElementById('after-lufs').textContent = lufs + ' LUFS';
+  document.getElementById('val-after').textContent = lufs + ' LUFS';
+  document.getElementById('bar-after').style.width = toPercent(parseFloat(lufs)) + '%';
+}
+slider.addEventListener('input', updateSliderDisplay);
+updateSliderDisplay();
+
+const REF_MARKERS = [
+  { lufs: -23, label: '放送規格', sub: '-23 LUFS', color: '#888' },
+  { lufs: -16, label: 'Podcast', sub: '-16 LUFS', color: '#f5a623' },
+  { lufs: -14, label: 'YouTube', sub: '-14 LUFS', color: '#FF0000' },
+  { lufs: -11, label: '配信向け', sub: '-11 LUFS', color: '#7c4dff' },
+];
+function buildRefScale() {
+  const el = document.getElementById('ref-scale');
+  el.innerHTML = '';
+  REF_MARKERS.forEach(({ lufs, label, sub, color }) => {
+    const m = document.createElement('div');
+    m.className = 'ref-marker';
+    m.style.left = toPercent(lufs) + '%';
+    m.innerHTML = `<div class="ref-marker-label" style="color:${color}">${label}</div>
+      <div class="ref-marker-lufs" style="color:${color}">${sub}</div>
+      <div class="ref-marker-line" style="background:${color}"></div>`;
+    el.appendChild(m);
   });
+}
+buildRefScale();
 
-  async function handleFile(file) {
-    if (!file.name.toLowerCase().endsWith('.mp4')) {
-      alert('MP4ファイルのみ対応しています');
-      return;
-    }
-    dropZone.style.display = 'none';
-    resultSection.style.display = 'block';
-    document.getElementById('filename-display').textContent = file.name;
-    showStatus('<span class="spinner"></span>解析中...', '');
-    normalizeBtn.disabled = true;
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
 
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/analyze', { method: 'POST', body: formData });
-      if (!res.ok) { const e = await res.json(); throw new Error(e.detail); }
-      const data = await res.json();
-      currentFileId = data.file_id;
-
-      const cl = data.current_content_loudness;
-      document.getElementById('current-cl').textContent = (cl >= 0 ? '+' : '') + cl.toFixed(1) + ' dB';
-      document.getElementById('current-lufs').textContent = data.current_lufs + ' LUFS';
-      document.getElementById('val-current').textContent = data.current_lufs + ' LUFS';
-      setTimeout(() => {
-        document.getElementById('bar-current').style.width = toPercent(data.current_lufs) + '%';
-        document.getElementById('bar-after').style.width = toPercent(parseFloat(clToLufs(getTargetCL()))) + '%';
-      }, 100);
-
-      showStatus('', '');
-      normalizeBtn.disabled = false;
-    } catch (e) {
-      showStatus(e.message || '解析に失敗しました', 'error');
-    }
+// ---- Step1: 解析（loudnorm pass1） ----
+async function handleFile(file) {
+  if (!file.name.toLowerCase().endsWith('.mp4') && file.type !== 'video/mp4') {
+    alert('MP4ファイルのみ対応しています');
+    return;
   }
+  currentFile = file;
+  dropZone.style.display = 'none';
+  resultSection.style.display = 'block';
+  document.getElementById('filename-display').textContent = file.name;
+  document.getElementById('file-size-display').textContent = fmtSize(file.size);
+  showStatus('<span class="spinner"></span>音声を解析中...', '');
+  normalizeBtn.disabled = true;
 
-  normalizeBtn.addEventListener('click', async () => {
-    if (!currentFileId) return;
-    normalizeBtn.disabled = true;
-    resetBtn.disabled = true;
-    showStatus('<span class="spinner"></span>正規化処理中... (ファイルサイズによって数分かかる場合があります)', '');
+  try {
+    await ffmpeg.writeFile('input.mp4', await fetchFile(file));
 
-    try {
-      const res = await fetch(`/normalize/${currentFileId}?target_cl=${getTargetCL()}`, { method: 'POST' });
-      if (!res.ok) { const e = await res.json(); throw new Error(e.detail); }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `normalized_CL${fmtCL(getTargetCL()).replace('+','plus').replace('-','minus')}.mp4`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showStatus(`ダウンロード完了。content loudness: ${fmtCL(getTargetCL())} に正規化しました。`, 'success');
-    } catch (e) {
-      showStatus(e.message || '処理に失敗しました', 'error');
-    } finally {
-      normalizeBtn.disabled = false;
-      resetBtn.disabled = false;
-    }
-  });
+    // Pass1: 解析のみ（-f null）
+    const logs = [];
+    ffmpeg.on('log', ({ message }) => logs.push(message));
+    await ffmpeg.exec([
+      '-i', 'input.mp4',
+      '-af', 'loudnorm=I=-18:TP=-1:LRA=11:print_format=json',
+      '-f', 'null', '-'
+    ]);
 
-  resetBtn.addEventListener('click', () => {
-    currentFileId = null;
-    fileInput.value = '';
-    resultSection.style.display = 'none';
-    dropZone.style.display = '';
+    const joined = logs.join('\n');
+    const start = joined.lastIndexOf('{');
+    const end = joined.lastIndexOf('}') + 1;
+    const loudData = JSON.parse(joined.slice(start, end));
+    const inputI = parseFloat(loudData.input_i);
+    const cl = inputI - (-14.0);
+
+    document.getElementById('current-cl').textContent = fmtCL(cl);
+    document.getElementById('current-lufs').textContent = inputI.toFixed(1) + ' LUFS';
+    document.getElementById('val-current').textContent = inputI.toFixed(1) + ' LUFS';
+    setTimeout(() => {
+      document.getElementById('bar-current').style.width = toPercent(inputI) + '%';
+      document.getElementById('bar-after').style.width = toPercent(parseFloat(clToLufs(getTargetCL()))) + '%';
+    }, 100);
+
+    // loudDataをボタンに持たせておく
+    normalizeBtn.dataset.loudData = JSON.stringify(loudData);
     showStatus('', '');
-    document.getElementById('bar-current').style.width = '0%';
-    document.getElementById('bar-after').style.width = '0%';
+    normalizeBtn.disabled = false;
+  } catch (e) {
+    showStatus('解析に失敗しました。有効なMP4ファイルか確認してください。', 'error');
+    console.error(e);
+  }
+}
+
+// ---- Step2: 正規化（pass2）＋ダウンロード ----
+normalizeBtn.addEventListener('click', async () => {
+  if (!currentFile || !normalizeBtn.dataset.loudData) return;
+  const loudData = JSON.parse(normalizeBtn.dataset.loudData);
+  const targetLufs = getTargetCL() - 14.0;
+
+  normalizeBtn.disabled = true;
+  resetBtn.disabled = true;
+  progressWrap.style.display = 'block';
+  progressBar.style.width = '0%';
+  progressLabel.textContent = '正規化処理中...';
+  showStatus('', '');
+
+  // プログレス更新
+  ffmpeg.on('progress', ({ progress }) => {
+    const pct = Math.round(progress * 100);
+    progressBar.style.width = pct + '%';
+    progressLabel.textContent = `処理中... ${pct}%`;
   });
 
-  function showStatus(msg, type) {
-    statusEl.innerHTML = msg;
-    statusEl.className = 'status' + (type ? ' ' + type : '');
+  try {
+    const filter = [
+      `loudnorm=I=${targetLufs}:TP=-1:LRA=11`,
+      `measured_I=${loudData.input_i}`,
+      `measured_LRA=${loudData.input_lra}`,
+      `measured_TP=${loudData.input_tp}`,
+      `measured_thresh=${loudData.input_thresh}`,
+      `offset=${loudData.target_offset}`,
+      'linear=true'
+    ].join(':');
+
+    await ffmpeg.exec([
+      '-i', 'input.mp4',
+      '-af', filter,
+      '-c:v', 'copy',
+      '-y', 'output.mp4'
+    ]);
+
+    const data = await ffmpeg.readFile('output.mp4');
+    const blob = new Blob([data.buffer], { type: 'video/mp4' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const cl = getTargetCL();
+    a.href = url;
+    a.download = `normalized_CL${fmtCL(cl).replace('+','plus').replace('-','minus')}.mp4`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    progressBar.style.width = '100%';
+    progressLabel.textContent = '完了！';
+    showStatus(`ダウンロード完了。content loudness: ${fmtCL(cl)} に正規化しました。`, 'success');
+  } catch (e) {
+    showStatus('処理に失敗しました。再度お試しください。', 'error');
+    console.error(e);
+  } finally {
+    normalizeBtn.disabled = false;
+    resetBtn.disabled = false;
   }
+});
+
+resetBtn.addEventListener('click', () => {
+  currentFile = null;
+  fileInput.value = '';
+  resultSection.style.display = 'none';
+  dropZone.style.display = '';
+  progressWrap.style.display = 'none';
+  progressBar.style.width = '0%';
+  showStatus('', '');
+  document.getElementById('bar-current').style.width = '0%';
+  normalizeBtn.dataset.loudData = '';
+});
+
+function showStatus(msg, type) {
+  statusEl.innerHTML = msg;
+  statusEl.className = 'status' + (type ? ' ' + type : '');
+}
 </script>
 </body>
 </html>
