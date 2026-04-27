@@ -11,7 +11,7 @@ import json
 import os
 import uuid
 
-MAX_FILE_SIZE = 500 * 1024 * 1024  # 500MB
+MAX_FILE_SIZE = 200 * 1024 * 1024  # 200MB（無料プラン512MB制限に合わせて削減）
 ALLOWED_MIME = {"video/mp4", "video/mpeg", "video/quicktime"}
 
 limiter = Limiter(key_func=get_remote_address)
@@ -58,18 +58,19 @@ async def analyze(request: Request, file: UploadFile = File(...)):
     if file.content_type not in ALLOWED_MIME:
         raise HTTPException(status_code=400, detail="MP4ファイルのみ対応しています")
 
-    # ファイルサイズチェック（読み込みながら上限確認）
-    content = b""
-    while chunk := await file.read(1024 * 1024):
-        content += chunk
-        if len(content) > MAX_FILE_SIZE:
-            raise HTTPException(status_code=400, detail="ファイルサイズは500MB以下にしてください")
-
     file_id = str(uuid.uuid4())
     input_path = os.path.join(UPLOAD_DIR, f"{file_id}_input.mp4")
 
+    # メモリに溜めず直接ディスクに書き込みながらサイズチェック
+    size = 0
     with open(input_path, "wb") as f:
-        f.write(content)
+        while chunk := await file.read(1024 * 1024):
+            size += len(chunk)
+            if size > MAX_FILE_SIZE:
+                f.close()
+                os.remove(input_path)
+                raise HTTPException(status_code=400, detail="ファイルサイズは200MB以下にしてください")
+            f.write(chunk)
 
     cmd = [
         "ffmpeg", "-i", input_path,
