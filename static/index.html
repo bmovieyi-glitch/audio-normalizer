@@ -291,25 +291,42 @@
   </footer>
 
 <script type="module">
-import { FFmpeg } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
-import { fetchFile, toBlobURL } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js';
+import { FFmpeg } from 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/esm/index.js';
+import { fetchFile, toBlobURL } from 'https://unpkg.com/@ffmpeg/util@0.12.1/dist/esm/index.js';
 
 const ffmpeg = new FFmpeg();
 
-// FFmpeg読み込み（シングルスレッド版 = COEP不要・互換性が高い）
 async function loadFFmpeg() {
-  const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.12.6/dist/esm';
+  const baseURL = 'https://unpkg.com/@ffmpeg/core-st@0.12.6/dist/esm';
+  try {
+    await ffmpeg.load({
+      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+      wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+    });
+    document.getElementById('ffmpeg-loading').style.display = 'none';
+    return;
+  } catch (e) {
+    console.warn('unpkg失敗、jsDelivrにフォールバック:', e);
+  }
+
+  // フォールバック: jsDelivr
+  const fallbackURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.12.6/dist/esm';
   await ffmpeg.load({
-    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+    coreURL: await toBlobURL(`${fallbackURL}/ffmpeg-core.js`, 'text/javascript'),
+    wasmURL: await toBlobURL(`${fallbackURL}/ffmpeg-core.wasm`, 'application/wasm'),
   });
   document.getElementById('ffmpeg-loading').style.display = 'none';
 }
 
 loadFFmpeg().catch(e => {
   console.error(e);
-  document.getElementById('ffmpeg-loading').innerHTML =
-    '<p style="color:#FF0000">FFmpegの読み込みに失敗しました。ページを再読み込みしてください。</p>';
+  document.getElementById('ffmpeg-loading').innerHTML = `
+    <p style="color:#FF0000;text-align:center;padding:0 24px">
+      FFmpegの読み込みに失敗しました。<br>
+      <button onclick="location.reload()" style="margin-top:12px;padding:8px 20px;background:#FF0000;color:#fff;border:none;border-radius:999px;font-size:14px;cursor:pointer">
+        再読み込みする
+      </button>
+    </p>`;
 });
 
 // UI要素
